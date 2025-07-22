@@ -3,656 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Srijeet Ray - SAP Integration Specialist</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>SAP CPI and APIM Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            color: #bbe1fa;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInDown 1s ease-out;
+        }
+
+        .slide h2 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            color: #bbe1fa;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInDown 1s ease-out 0.2s both;
+        }
+
+        .slide h3 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            color: #bbe1fa;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide p, .slide li {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .slide ul {
+            text-align: left;
+            max-width: 1000px;
+        }
+
+        .slide li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .slide li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #bbe1fa;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            font-size: 1.1em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #bbe1fa;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .architecture-diagram {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .highlight {
+            color: #bbe1fa;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .comparison-table th {
+            color: #bbe1fa;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <span class="brand-text">Srijeet Ray</span>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>SAP Cloud Platform Integration (CPI) & API Management (APIM)</h1>
+            <p>Comprehensive Overview of SAP's Integration and API Management Solutions</p>
+            <div style="margin-top: 50px; font-size: 1.2em; opacity: 0.8;">
+                Enterprise Integration in the Cloud Era
             </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <h2>Presentation Agenda</h2>
+            <ul>
+                <li>Introduction to SAP CPI</li>
+                <li>SAP CPI Architecture & Components</li>
+                <li>Key Features and Capabilities</li>
+                <li>Integration Patterns</li>
+                <li>Introduction to SAP APIM</li>
+                <li>APIM Architecture & Components</li>
+                <li>API Lifecycle Management</li>
+                <li>Security & Governance</li>
+                <li>CPI vs APIM Comparison</li>
+                <li>Use Cases & Best Practices</li>
+                <li>Implementation Strategy</li>
+                <li>Q&A</li>
             </ul>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="hero-greeting">Hello, I'm</span>
-                        <span class="hero-name">Srijeet Ray</span>
-                    </h1>
-                    <h2 class="hero-subtitle">SAP Integration Specialist</h2>
-                    <p class="hero-description">
-                        Expert in SAP Cloud Platform Integration (CPI), Event-Driven Architecture, 
-                        and Enterprise Integration Solutions. Passionate about creating seamless 
-                        digital transformations through innovative SAP technologies.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View Projects</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                    </div>
+        <!-- Slide 3: What is SAP CPI -->
+        <div class="slide">
+            <h2>What is SAP Cloud Platform Integration (CPI)?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Integration Platform</h4>
+                    <p>Cloud-based integration platform-as-a-service (iPaaS) that connects applications, data, and processes</p>
                 </div>
-                <div class="hero-visual">
-                    <div class="hero-avatar">
-                        <div class="avatar-circle">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
+                <div class="feature-card">
+                    <h4>Hybrid Connectivity</h4>
+                    <p>Seamlessly integrates cloud and on-premise systems in hybrid landscapes</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Pre-built Content</h4>
+                    <p>Extensive library of pre-built integration flows and adapters for rapid deployment</p>
                 </div>
             </div>
+            <p>SAP CPI enables organizations to integrate applications and data across <span class="highlight">cloud, on-premise, and hybrid environments</span> with enterprise-grade security and scalability.</p>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Professional Summary</p>
+        <!-- Slide 4: CPI Architecture -->
+        <div class="slide">
+            <h2>SAP CPI Architecture</h2>
+            <div class="architecture-diagram">
+                <h3>Core Components</h3>
+                <ul>
+                    <li><strong>Integration Runtime:</strong> Executes integration flows</li>
+                    <li><strong>Web Tooling:</strong> Eclipse-based design environment</li>
+                    <li><strong>Operations Cockpit:</strong> Monitoring and management console</li>
+                    <li><strong>Content Catalog:</strong> Repository of pre-built content packages</li>
+                    <li><strong>Connectivity:</strong> Cloud Connector for secure on-premise access</li>
+                </ul>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-description">
-                        As a dedicated SAP Integration Specialist, I bring extensive expertise in designing 
-                        and implementing complex integration solutions using SAP Cloud Platform Integration (CPI). 
-                        My passion lies in creating robust, scalable integration flows that connect diverse 
-                        systems and enable seamless data exchange across enterprise landscapes.
-                    </p>
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-code"></i>
-                            <span>Groovy Scripting & XSLT Mapping</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-cloud"></i>
-                            <span>SAP BTP & Cloud Integration Specialist</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-robot"></i>
-                            <span>AI & Generative AI Tools Integration</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-network-wired"></i>
-                            <span>Event-Driven Architecture</span>
-                        </div>
-                    </div>
+            <p>Built on <span class="highlight">Apache Camel</span> framework with enterprise extensions for SAP-specific requirements</p>
+        </div>
+
+        <!-- Slide 5: CPI Key Features -->
+        <div class="slide">
+            <h2>SAP CPI Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Visual Development</h4>
+                    <p>Drag-and-drop interface for creating integration flows without complex coding</p>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Integration Flows</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">SAP Technologies</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Success Rate</div>
-                    </div>
+                <div class="feature-card">
+                    <h4>Multiple Protocols</h4>
+                    <p>Support for REST, SOAP, OData, SFTP, AS2, IDoc, and more</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Message Processing</h4>
+                    <p>Advanced routing, transformation, and enrichment capabilities</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Error Handling</h4>
+                    <p>Built-in exception handling and retry mechanisms</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Monitoring</h4>
+                    <p>Real-time monitoring with detailed logging and alerting</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Security</h4>
+                    <p>Enterprise-grade security with encryption, certificates, and OAuth</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Technical Skills</h2>
-                <p class="section-subtitle">My Technical Expertise</p>
+        <!-- Slide 6: Integration Patterns -->
+        <div class="slide">
+            <h2>Common Integration Patterns in CPI</h2>
+            <ul>
+                <li><strong>Point-to-Point Integration:</strong> Direct connection between two systems</li>
+                <li><strong>Hub-and-Spoke:</strong> Central integration hub connecting multiple endpoints</li>
+                <li><strong>Event-Driven:</strong> Real-time event processing and messaging</li>
+                <li><strong>Batch Processing:</strong> Scheduled bulk data transfers and transformations</li>
+                <li><strong>API Proxy:</strong> Expose backend systems as RESTful APIs</li>
+                <li><strong>Content Enrichment:</strong> Augment data with additional information from multiple sources</li>
+                <li><strong>Message Routing:</strong> Dynamic routing based on content or conditions</li>
+            </ul>
+            <div style="margin-top: 40px;">
+                <p><span class="highlight">Best Practice:</span> Choose patterns based on data volume, frequency, and business requirements</p>
             </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-cloud"></i>
-                        SAP Integration
-                    </h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">SAP Cloud Platform Integration (CPI)</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">SAP CPI-DS (Data Services)</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">SAP API Management</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">SAP IBP</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-code"></i>
-                        Development & Scripting
-                    </h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">Groovy Scripting</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="92%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">XSLT Mapping</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="87%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">OData APIs (V2 & V4)</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Integration Design Patterns</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="93%"></div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Slide 7: What is SAP APIM -->
+        <div class="slide">
+            <h2>What is SAP API Management (APIM)?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>API Gateway</h4>
+                    <p>Centralized entry point for all API traffic with routing, security, and throttling</p>
                 </div>
+                <div class="feature-card">
+                    <h4>Developer Portal</h4>
+                    <p>Self-service portal for API documentation, testing, and subscription management</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Analytics</h4>
+                    <p>Comprehensive API usage analytics and business insights</p>
+                </div>
+            </div>
+            <p>SAP APIM provides <span class="highlight">complete API lifecycle management</span> from design and development to deployment, monitoring, and retirement.</p>
+        </div>
 
-                <div class="skill-category">
-                    <h3 class="category-title">
-                        <i class="fas fa-robot"></i>
-                        AI & Modern Tech
-                    </h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">Prompt Engineering</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="89%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Advanced Prompt Engineering</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Generative AI Tools Integration</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Event-Driven Architecture</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="91%"></div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Slide 8: APIM Architecture -->
+        <div class="slide">
+            <h2>SAP APIM Architecture</h2>
+            <div class="architecture-diagram">
+                <h3>Core Components</h3>
+                <ul>
+                    <li><strong>API Gateway:</strong> Runtime component handling API requests</li>
+                    <li><strong>API Portal:</strong> Management interface for API providers</li>
+                    <li><strong>Developer Portal:</strong> Self-service interface for API consumers</li>
+                    <li><strong>Analytics Service:</strong> Real-time and historical API usage data</li>
+                    <li><strong>Policy Framework:</strong> Configurable policies for security, traffic management</li>
+                </ul>
+            </div>
+            <p>Integrated with <span class="highlight">SAP Cloud Platform</span> and supports multi-cloud deployments</p>
+        </div>
+
+        <!-- Slide 9: API Lifecycle -->
+        <div class="slide">
+            <h2>API Lifecycle Management</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Design</h4>
+                    <p>API-first design with OpenAPI specifications and mock services</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Develop</h4>
+                    <p>Policy configuration, transformation, and backend integration</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Test</h4>
+                    <p>Built-in testing tools and sandbox environments</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Deploy</h4>
+                    <p>Version management and blue-green deployments</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Monitor</h4>
+                    <p>Real-time monitoring, alerting, and performance optimization</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Retire</h4>
+                    <p>Graceful API deprecation and sunset management</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Enterprise Integration Solutions</p>
+        <!-- Slide 10: Security & Governance -->
+        <div class="slide">
+            <h2>Security & Governance in APIM</h2>
+            <ul>
+                <li><strong>Authentication & Authorization:</strong> OAuth 2.0, JWT, API Keys, SAML</li>
+                <li><strong>Rate Limiting:</strong> Protect backend systems from overload</li>
+                <li><strong>IP Filtering:</strong> Restrict access based on IP addresses</li>
+                <li><strong>Data Protection:</strong> Request/response filtering and masking</li>
+                <li><strong>Threat Protection:</strong> SQL injection, XSS, and malicious payload detection</li>
+                <li><strong>Compliance:</strong> Audit trails and regulatory compliance support</li>
+                <li><strong>API Governance:</strong> Centralized policies and consistent standards</li>
+            </ul>
+            <div style="margin-top: 40px;">
+                <p><span class="highlight">Zero Trust Security:</span> Every API call is authenticated and authorized</p>
             </div>
-            <div class="projects-grid">
-                <!-- Project 1: AI-Powered Instagram Store Support Bot -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3 class="project-title">AI-Powered Instagram Store Support Bot</h3>
-                        <p class="project-subtitle">SAP CPI + AIML API Integration</p>
-                    </div>
-                    <div class="project-content">
-                        <p class="project-description">
-                            Intelligent customer support system for Instagram fashion store using AI via AIML API. 
-                            Generates friendly responses, extracts structured order details, and routes queries 
-                            intelligently based on context.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">SAP CPI</span>
-                            <span class="tech-tag">AIML API</span>
-                            <span class="tech-tag">Groovy Script</span>
-                            <span class="tech-tag">Google Sheets</span>
-                            <span class="tech-tag">Mail Adapter</span>
-                        </div>
-                        <div class="project-features">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>AI-generated personalized responses</li>
-                                <li>Intelligent routing (Order, Delivery, Return, General)</li>
-                                <li>Structured data extraction and logging</li>
-                                <li>Multi-channel communication</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn btn-outline" onclick="toggleProjectDetails(this)">
-                            <span>View Details</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="project-details">
-                        <div class="details-section">
-                            <h4>Sample Input/Output:</h4>
-                            <div class="code-block">
-                                <pre><code>{
-  "customer_name": "Rina",
-  "customer_type": "regular",
-  "message": "Hi! Can I get 5 combo tshirts of size L and color red? Do you have COD?"
-}</code></pre>
-                            </div>
-                            <p><strong>Output:</strong> AI response + Google Sheets logging + confirmation email</p>
-                        </div>
-                        <div class="details-section">
-                            <h4>Technical Implementation:</h4>
-                            <ul>
-                                <li>HTTPS Adapter for receiving JSON customer messages</li>
-                                <li>Content Modifier for setting API keys and prompts</li>
-                                <li>Request Reply for AIML API calls</li>
-                                <li>Router for intent-based message routing</li>
-                                <li>Exception handling and error management</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <!-- Project 2: Loan Eligibility API -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <h3 class="project-title">Loan Eligibility API</h3>
-                        <p class="project-subtitle">Automated Credit Assessment System</p>
-                    </div>
-                    <div class="project-content">
-                        <p class="project-description">
-                            REST API that determines customer loan eligibility based on income, EMI commitments, 
-                            age, and credit score. Automates pre-loan eligibility checks for banks and fintech platforms.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">SAP CPI</span>
-                            <span class="tech-tag">REST API</span>
-                            <span class="tech-tag">Groovy</span>
-                            <span class="tech-tag">JSON Processing</span>
-                            <span class="tech-tag">API Management</span>
-                        </div>
-                        <div class="project-features">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>EMI to Income Ratio calculation</li>
-                                <li>Credit score threshold validation</li>
-                                <li>Maximum loan amount estimation</li>
-                                <li>Secure API with throttling</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn btn-outline" onclick="toggleProjectDetails(this)">
-                            <span>View Details</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="project-details">
-                        <div class="details-section">
-                            <h4>Eligibility Logic:</h4>
-                            <ol>
-                                <li>Calculate EMI to Income Ratio</li>
-                                <li>Validate credit score (threshold: 700+)</li>
-                                <li>Estimate max loan based on disposable income and age</li>
-                                <li>Generate eligibility report with recommendations</li>
-                            </ol>
-                        </div>
-                        <div class="details-section">
-                            <h4>Use Cases:</h4>
-                            <ul>
-                                <li>Banks for pre-loan screening</li>
-                                <li>NBFCs for quick eligibility checks</li>
-                                <li>Fintech platforms for automated processing</li>
-                                <li>Customer portals for self-service</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <!-- Slide 11: CPI vs APIM Comparison -->
+        <div class="slide">
+            <h2>SAP CPI vs APIM: Key Differences</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>SAP CPI</th>
+                            <th>SAP APIM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Primary Purpose</strong></td>
+                            <td>System Integration</td>
+                            <td>API Management</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Focus</strong></td>
+                            <td>Data transformation & routing</td>
+                            <td>API governance & lifecycle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target Users</strong></td>
+                            <td>Integration developers</td>
+                            <td>API providers & consumers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Key Strength</strong></td>
+                            <td>Complex data processing</td>
+                            <td>API security & analytics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Use Case</strong></td>
+                            <td>Backend system integration</td>
+                            <td>API publishing & consumption</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><span class="highlight">Complementary Solutions:</span> Often used together in enterprise architectures</p>
+        </div>
 
-                <!-- Project 3: Automated PO Creation & Mismatch Notification -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-file-invoice"></i>
-                        </div>
-                        <h3 class="project-title">Automated PO Creation System</h3>
-                        <p class="project-subtitle">Google Sheets & Salesforce Integration</p>
-                    </div>
-                    <div class="project-content">
-                        <p class="project-description">
-                            Fetches supplier data from Google Sheets and Salesforce, matches records, generates 
-                            Purchase Orders in XML/CSV format, and notifies mismatches via email with robust 
-                            exception handling.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">SAP CPI</span>
-                            <span class="tech-tag">Google Sheets API</span>
-                            <span class="tech-tag">Salesforce</span>
-                            <span class="tech-tag">XML/CSV</span>
-                            <span class="tech-tag">Multicast</span>
-                        </div>
-                        <div class="project-features">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>Dual-source data integration</li>
-                                <li>Intelligent data matching and filtering</li>
-                                <li>Multi-format PO generation</li>
-                                <li>Comprehensive exception handling</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn btn-outline" onclick="toggleProjectDetails(this)">
-                            <span>View Details</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="project-details">
-                        <div class="details-section">
-                            <h4>Integration Flow:</h4>
-                            <ol>
-                                <li>Fetch supplier master data from Google Sheets</li>
-                                <li>Retrieve supplier data from Salesforce</li>
-                                <li>Match records based on Email and Material</li>
-                                <li>Generate PO for matched records (XML + CSV)</li>
-                                <li>Send mismatch notifications via email</li>
-                            </ol>
-                        </div>
-                        <div class="details-section">
-                            <h4>Design Patterns Used:</h4>
-                            <ul>
-                                <li>Multicast for parallel processing</li>
-                                <li>Content-based routing</li>
-                                <li>Exception subprocess</li>
-                                <li>Message transformation</li>
-                            </ul>
-                        </div>
-                    </div>
+        <!-- Slide 12: Implementation Strategy -->
+        <div class="slide">
+            <h2>Implementation Strategy & Best Practices</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Assessment</h4>
+                    <p>Evaluate current integration landscape and identify requirements</p>
                 </div>
-
-                <!-- Project 4: Event-Driven Kudos Messaging -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <h3 class="project-title">Event-Driven Kudos Messaging</h3>
-                        <p class="project-subtitle">SAP Advanced Event Mesh (Solace)</p>
-                    </div>
-                    <div class="project-content">
-                        <p class="project-description">
-                            Event-driven architecture using SAP Advanced Event Mesh powered by Solace. 
-                            Implements Publisher-Subscriber pattern for asynchronous kudos messaging 
-                            across enterprise applications.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">SAP Event Mesh</span>
-                            <span class="tech-tag">Solace</span>
-                            <span class="tech-tag">Publisher-Subscriber</span>
-                            <span class="tech-tag">Async Messaging</span>
-                            <span class="tech-tag">Mail Integration</span>
-                        </div>
-                        <div class="project-features">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>Decoupled event-driven architecture</li>
-                                <li>Asynchronous message processing</li>
-                                <li>Topic-based message routing</li>
-                                <li>Automatic email notifications</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn btn-outline" onclick="toggleProjectDetails(this)">
-                            <span>View Details</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="project-details">
-                        <div class="details-section">
-                            <h4>Architecture Components:</h4>
-                            <ul>
-                                <li><strong>Publisher iFlow:</strong> Accepts kudos messages and publishes to Solace queue</li>
-                                <li><strong>Subscriber iFlow:</strong> Listens to queue, formats messages, sends emails</li>
-                                <li><strong>Topic Structure:</strong> company/employee/kudos</li>
-                                <li><strong>QoS:</strong> At Least Once delivery guarantee</li>
-                            </ul>
-                        </div>
-                        <div class="details-section">
-                            <h4>Message Flow:</h4>
-                            <p>HTTP trigger → Content modifier → AEM publish → Queue → AEM subscribe → Email format → Mail delivery</p>
-                        </div>
-                    </div>
+                <div class="feature-card">
+                    <h4>Architecture Design</h4>
+                    <p>Define target architecture with clear separation of concerns</p>
                 </div>
-
-                <!-- Project 5: Order and Review Summary Flow -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="project-title">Order & Review Summary Flow</h3>
-                        <p class="project-subtitle">E-commerce Analytics Integration</p>
-                    </div>
-                    <div class="project-content">
-                        <p class="project-description">
-                            Fetches order details and customer reviews, analyzes them using Groovy scripts, 
-                            and generates comprehensive summary reports for business intelligence and 
-                            management dashboards.
-                        </p>
-                        <div class="project-technologies">
-                            <span class="tech-tag">SAP CPI</span>
-                            <span class="tech-tag">HTTP Adapters</span>
-                            <span class="tech-tag">Groovy Analytics</span>
-                            <span class="tech-tag">Report Generation</span>
-                            <span class="tech-tag">Business Intelligence</span>
-                        </div>
-                        <div class="project-features">
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>Multi-source data aggregation</li>
-                                <li>Order-review correlation analysis</li>
-                                <li>Automated report generation</li>
-                                <li>Management dashboard integration</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="project-actions">
-                        <button class="btn btn-outline" onclick="toggleProjectDetails(this)">
-                            <span>View Details</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                    <div class="project-details">
-                        <div class="details-section">
-                            <h4>Integration Steps:</h4>
-                            <ol>
-                                <li>HTTPS trigger initiates the flow</li>
-                                <li>Fetch orders from Order Management System</li>
-                                <li>Retrieve customer reviews from Review API</li>
-                                <li>Groovy script processes and correlates data</li>
-                                <li>Generate summary report with insights</li>
-                                <li>Email report to stakeholders</li>
-                            </ol>
-                        </div>
-                        <div class="details-section">
-                            <h4>Analytics Capabilities:</h4>
-                            <ul>
-                                <li>Most-reviewed products identification</li>
-                                <li>Average rating calculations</li>
-                                <li>Order volume and trend analysis</li>
-                                <li>Customer satisfaction metrics</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="feature-card">
+                    <h4>Pilot Projects</h4>
+                    <p>Start with low-risk, high-value use cases for proof of concept</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Center of Excellence</h4>
+                    <p>Establish governance, standards, and best practices</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Training</h4>
+                    <p>Invest in team training and certification programs</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Monitoring</h4>
+                    <p>Implement comprehensive monitoring and alerting from day one</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's discuss your integration needs</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:2000.srijeetray@gmail.com" class="contact-value">2000.srijeetray@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-linkedin"></i>
-                        <div>
-                            <span class="contact-label">LinkedIn</span>
-                            <a href="https://www.linkedin.com/in/srijeetray/" target="_blank" class="contact-value">linkedin.com/in/srijeetray</a>
-                        </div>
-                    </div>
-                        <div class="contact-item">
-                        <i class="fab fa-linkedin"></i>
-                        <div>
-                            <span class="contact-label">Github</span>
-                            <a href="https://github.com/srijeetray232" target="_blank" class="contact-value">github.com/srijeetray232</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <span class="contact-label">Location</span>
-                            <span class="contact-value">India</span>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-download"></i>
-                        <div>
-                            <span class="contact-label">Profile Details</span>
-                            <button class="contact-value download-resume" onclick="downloadResume()">Download</button>
-                        </div>
-                    </div>
-                </div>
-               <div class="contact-form">
-    <h3>Check My Availability</h3>
-    <form>
-        <div class="form-group">
-            <label for="fullname">Your Name</label>
-            <input type="text" id="fullname" name="fullname" placeholder="John Doe" disabled>
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
         </div>
-        <div class="form-group">
-            <label for="emailinfo">Your Email</label>
-            <input type="email" id="emailinfo" name="emailinfo" placeholder="you@example.com" disabled>
-        </div>
-        <div class="form-group">
-            <label for="timeslot">Preferred Time Slot</label>
-            <input type="text" id="timeslot" name="timeslot" placeholder="e.g., Mon 10AM–12PM" disabled>
-        </div>
-        <div class="form-group">
-            <label for="purpose">Purpose</label>
-            <textarea id="purpose" name="purpose" rows="5" placeholder="Briefly describe your purpose..." disabled></textarea>
-        </div>
-        <button type="button" class="btn btn-secondary" disabled>Coming Soon</button>
-    </form>
-</div>
+    </div>
 
-            </div>
-        </div>
-    </section>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Srijeet Ray</h3>
-                    <p>SAP Integration Specialist focused on creating innovative enterprise solutions.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#skills">Skills</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Technologies</h4>
-                    <ul>
-                        <li>SAP CPI</li>
-                        <li>Event Mesh</li>
-                        <li>API Management</li>
-                        <li>Groovy Scripting</li>
-                        <li>AI Integration</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Srijeet Ray. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
 
-    <script src="script.js"></script>
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction === -1 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+
+        // Add smooth animations for feature cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animationDelay = `${index * 0.1}s`;
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
-
